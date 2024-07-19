@@ -1,0 +1,28 @@
+- block:
+
+  - name: 'Put client-cert-gen script'
+    template:
+      src: 'client-cert-gen.sh.j2'
+      dest: '/root/client-cert-gen.sh'
+      backup: true
+      mode: 0750
+
+  - name: 'Initialize the openvpn client'
+    shell: |
+      /root/client-cert-gen.sh
+    args:
+      creates: '/root/ovpn_client_{{ client_name }}_created'
+
+  - name: 'Initialize the ovpn client configuration'
+    shell: |
+      docker run -v {{ ovpn_data }}:/etc/openvpn --log-driver=none --rm kylemanna/openvpn ovpn_getclient {{ client_name }}> /root/{{ client_name }}.ovpn
+    args:
+      creates: '/root/ovpn_client_{{ client_name }}_config_created'
+
+  - name: Fetch the generated OpenVPN file
+    fetch:
+      src: /root/{{ client_name }}.ovpn
+      dest: ./ovpn-client-configs/
+      flat: yes
+
+  tags: [install, configure_user]

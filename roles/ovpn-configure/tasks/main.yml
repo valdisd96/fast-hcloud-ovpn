@@ -1,0 +1,7 @@
+---
+
+- include_tasks: install.yml
+  tags: [install]
+
+- include_tasks: configure-user.yml
+  tags: [install, configure_user]

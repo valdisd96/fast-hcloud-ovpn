@@ -1,0 +1,3 @@
+ovpn_data: 'ovpn-data-example'
+client_name: '{{ client_name }}'
+ovpn_passphrase: '{{ ovpn_passphrase }}'

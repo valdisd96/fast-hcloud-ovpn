@@ -1,0 +1,11 @@
+# Ignore terraform service files
+*.tfvars
+*.tfstate
+*.tfstate.*
+.terraform/
+
+# ignore dirrectory with ovpn generated client configs
+ovpn-client-configs/*
+
+# ignore generated ssh key for hcloud servers
+id_rsa

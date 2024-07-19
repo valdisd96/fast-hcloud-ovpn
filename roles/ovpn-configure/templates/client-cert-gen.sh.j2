@@ -1,0 +1,10 @@
+#!/usr/bin/expect
+
+set timeout -1
+
+spawn docker run -v {{ ovpn_data }}:/etc/openvpn --log-driver=none --rm -it kylemanna/openvpn easyrsa build-client-full {{ client_name }} nopass
+
+expect "Enter pass phrase for /etc/openvpn/pki/private/ca.key:" 
+send -- "{{ ovpn_passphrase }}\r"
+
+expect eof

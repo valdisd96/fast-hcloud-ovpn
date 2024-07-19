@@ -1,0 +1,44 @@
+- block:
+
+  - name: Update apt cache after adding Docker repo
+    apt:
+      update_cache: yes
+
+  - name: Install expect
+    apt:
+      name:
+        - expect
+      state: present
+
+  - name: 'Initialize data volume container'
+    shell: |
+      docker volume create --name {{ ovpn_data }}
+    args:
+      creates: /root/volume_created
+
+  - name: 'Initialize the ovpn container that will hold the configuration files and certificates'
+    shell: |
+      docker run -v {{ ovpn_data }}:/etc/openvpn --log-driver=none --rm kylemanna/openvpn ovpn_genconfig -u udp://{{ ansible_ssh_host }}
+    args:
+      creates: /rooot/ovpn_container_created
+
+  - name: 'Put pki-gen script'
+    template:
+      src: 'pki-gen.sh.j2'
+      dest: '/root/pki-gen.sh'
+      backup: true
+      mode: 0750
+
+  - name: 'Initialize the ovpn container that will hold the configuration files and certificates'
+    shell: |
+      /root/pki-gen.sh
+    args:
+      creates: /root/ovpn_initpki_created
+
+  - name: 'Start ovpn container'
+    shell: |
+      docker run -v {{ ovpn_data }}:/etc/openvpn -d -p 1194:1194/udp --cap-add=NET_ADMIN kylemanna/openvpn
+    args:
+      creates: /root/ovpn_initpki_started
+
+  tags: [install]

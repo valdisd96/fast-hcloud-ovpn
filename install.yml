@@ -1,0 +1,8 @@
+---
+- name: 'install.yml'
+  hosts: ovpn_servers
+  gather_facts: yes
+  become: true
+  roles:
+  - role: docker
+  - role: ovpn-configure
