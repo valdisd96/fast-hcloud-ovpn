@@ -25,14 +25,14 @@ Make sure you have the following prerequisites (tested on the latest versions of
 
 ## Configure additional users
 
-The wrapper script also has an additional tag for creating users on an already configured VPN server. Run the script with the following options:
+1. The wrapper script also has an additional tag for creating users on an already configured VPN server. Run the script with the following options:
     ```sh
     ./fast-ovpn.sh configure_user --client_name "<client_name>" --ovpn_passphrase "<ovpn_passphrase>"
     ```
 
 ## Destroy VPN server and infrastructure
 
-To remove the VPN server and infrastructure, run the script:
+1. To remove the VPN server and infrastructure, run the script:
     ```sh
     ./fast-ovpn.sh destroy --token "<hcloud_token>"
     ```
