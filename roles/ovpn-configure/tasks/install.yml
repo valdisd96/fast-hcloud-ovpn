@@ -20,7 +20,7 @@
     shell: |
       docker run -v {{ ovpn_data }}:/etc/openvpn --log-driver=none --rm kylemanna/openvpn ovpn_genconfig -u udp://{{ ansible_ssh_host }}
     args:
-      creates: /rooot/ovpn_container_created
+      creates: /root/ovpn_container_created
 
   - name: 'Put pki-gen script'
     template:
