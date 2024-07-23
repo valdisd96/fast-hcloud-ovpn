@@ -1,5 +1,4 @@
 - block:
-
   - name: 'Put client-cert-gen script'
     template:
       src: 'client-cert-gen.sh.j2'
@@ -23,6 +22,5 @@
     fetch:
       src: /root/{{ client_name }}.ovpn
       dest: ./ovpn-client-configs/
-      flat: yes
-
+      flat: true
   tags: [install, configure_user]

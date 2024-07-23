@@ -1,8 +1,7 @@
 - block:
-
   - name: Update apt cache after adding Docker repo
     apt:
-      update_cache: yes
+      update_cache: true
 
   - name: Install expect
     apt:
@@ -40,5 +39,4 @@
       docker run -v {{ ovpn_data }}:/etc/openvpn -d -p 1194:1194/udp --cap-add=NET_ADMIN kylemanna/openvpn
     args:
       creates: /root/ovpn_initpki_started
-
   tags: [install]
