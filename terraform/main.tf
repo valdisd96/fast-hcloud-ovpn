@@ -3,8 +3,7 @@ data "external" "my_ip" {
 }
 
 resource "tls_private_key" "ssh_key" {
-  algorithm = "RSA"
-  rsa_bits = 4096
+  algorithm = "ED25519"
 }
 
 resource "hcloud_ssh_key" "primary-ssh-key" {

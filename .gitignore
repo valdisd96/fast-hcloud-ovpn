@@ -8,4 +8,4 @@
 ovpn-client-configs/*
 
 # ignore generated ssh key for hcloud servers
-id_rsa
+id_ed25519

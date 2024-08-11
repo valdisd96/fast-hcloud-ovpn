@@ -65,7 +65,7 @@ function run_ansible_task() {
     fi
 
     export ANSIBLE_HOST_KEY_CHECKING=False
-    export ANSIBLE_PRIVATE_KEY_FILE=./id_rsa
+    export ANSIBLE_PRIVATE_KEY_FILE=./id_ed25519
     ansible-playbook -i inventory install.yml --tags ${tag} --extra-vars "client_name=$CLIENT_NAME ovpn_passphrase=$OVPN_PASSPHRASE ansible_ssh_host=$ansible_host"
 }
 
@@ -76,7 +76,7 @@ if [[ "${tag}" == "install" ]]; then
     echo "Creating infrastructure"
     manage_infrastructure "apply -auto-approve"
     public_address=$(terraform output -json ovpn_hosts | jq -r '.control_plane.public_address')
-    terraform output -raw ovpn_host_ssh_private_key > ../id_rsa && chmod 400 ../id_rsa
+    terraform output -raw ovpn_host_ssh_private_key > ../id_ed25519 && chmod 400 ../id_ed25519
     echo "Sleep 30 seconds for server properly created"
     sleep 30
     cd ../
@@ -87,7 +87,7 @@ elif [[ "${tag}" == "destroy" ]]; then
     echo "Destroying infrastructure"
     cd ./terraform
     manage_infrastructure "destroy -auto-approve"
-    rm -f ../id_rsa
+    rm -f ../id_ed25519
 
 elif [[ "${tag}" == "configure_user" ]]; then
     echo "Add Ovpn user"
