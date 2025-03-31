@@ -18,7 +18,7 @@ variable "delete_protection" {
 
 variable "ovpn_server_type" {
   description = "ovpn_server_type. 'hcloud server-type list' for help"
-  default     = "cx11"
+  default     = "cx22"
 }
 
 variable "ovpn_server_image" {
